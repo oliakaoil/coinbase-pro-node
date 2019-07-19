@@ -29,7 +29,7 @@ declare module 'coinbase-pro' {
     client_oid?: string;
     stp?: 'dc' | 'co' | 'cn' | 'cb';
     stop?: 'loss' | 'entry';
-    stop_price?: string;
+    stop_price?: number;
   }
 
   interface LimitOrder extends BaseOrder {
@@ -49,13 +49,13 @@ declare module 'coinbase-pro' {
   interface MarketOrder extends BaseOrder {
     type: 'market';
     size: string | null;
-    funds: string | null;
+    funds: number | null;
   }
 
   interface StopOrder extends BaseOrder {
     type: 'stop';
     size: string;
-    funds: string;
+    funds: number;
   }
 
   export type OrderParams = MarketOrder | LimitOrder | StopOrder;
@@ -71,7 +71,7 @@ declare module 'coinbase-pro' {
     post_only: boolean;
     fill_fees: string;
     filled_size: string;
-    status: 'received' | 'rejected' | 'open' | 'done' | 'pending';
+    status: 'received' | 'rejected' | 'open' | 'done' | 'pending' | 'settled' | 'active';
     settled: boolean;
     executed_value: string;
     time_in_force: 'GTC' | 'GTT' | 'IOC' | 'FOK';
@@ -82,7 +82,7 @@ declare module 'coinbase-pro' {
   }
 
   export interface OrderInfo extends BaseOrderInfo {
-    status: 'received' | 'open' | 'done' | 'pending';
+    status: 'received' | 'open' | 'done' | 'pending' | 'rejected' | 'settled' | 'active';
     funds?: number;
     specified_funds?: number;
     done_at?: string;
@@ -373,7 +373,7 @@ declare module 'coinbase-pro' {
     };
     type ReceivedMarket = {
       order_type: 'market';
-      funds: string;
+      funds: number;
     };
     export type Open = {
       type: 'open';
@@ -413,8 +413,8 @@ declare module 'coinbase-pro' {
       side: Side;
       new_size?: string;
       old_size?: string;
-      new_funds?: string;
-      old_funds?: string;
+      new_funds?: number;
+      old_funds?: number;
     };
     export type Done = {
       type: 'done';
