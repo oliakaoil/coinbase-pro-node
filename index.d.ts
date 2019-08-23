@@ -28,8 +28,6 @@ declare module 'coinbase-pro' {
     product_id: string;
     client_oid?: string;
     stp?: 'dc' | 'co' | 'cn' | 'cb';
-    stop?: 'loss' | 'entry';
-    stop_price?: number;
   }
 
   interface LimitOrder extends BaseOrder {
@@ -53,9 +51,13 @@ declare module 'coinbase-pro' {
   }
 
   interface StopOrder extends BaseOrder {
-    type: 'stop';
+    type: 'limit';
     size: string;
+    price: number;
     funds: number;
+    stop?: 'loss' | 'entry';
+    stop_price?: number;    
+    time_in_force: 'GTC' | 'GTT' | 'IOC' | 'FOK';
   }
 
   export type OrderParams = MarketOrder | LimitOrder | StopOrder;
@@ -87,6 +89,7 @@ declare module 'coinbase-pro' {
     specified_funds?: number;
     done_at?: string;
     done_reason?: string;
+    stop_price?: string;
   }
 
   export type PageArgs = {
@@ -139,6 +142,8 @@ declare module 'coinbase-pro' {
     quote_increment: string;
     display_name: string;
     margin_enabled: boolean;
+    status: string;
+    status_message: string;
   }
 
   /**
