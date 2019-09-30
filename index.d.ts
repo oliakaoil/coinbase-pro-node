@@ -34,7 +34,6 @@ declare module 'coinbase-pro' {
     type: 'limit';
     price: string;
     size: string;
-    funds: string;
     time_in_force?: 'GTC' | 'GTT' | 'IOC' | 'FOK';
     cancel_after?: 'min' | 'hour' | 'day';
     post_only?: boolean;
